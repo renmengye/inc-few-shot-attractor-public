@@ -1,0 +1,24 @@
+// Experiment configurations.
+
+syntax = "proto2";
+
+package fewshot.configs;
+
+import "fewshot/configs/optimizer_config.proto";
+import "fewshot/configs/protonet_config.proto";
+import "fewshot/configs/resnet_config.proto";
+import "fewshot/configs/cnn_config.proto";
+import "fewshot/configs/train_config.proto";
+import "fewshot/configs/transfer_config.proto";
+
+message ExperimentConfig {
+  optional string backbone_class = 1;
+  optional string model_class = 2;
+  optional string dtype = 3 [default = "float32"];
+  optional fewshot.configs.ResnetConfig resnet_config = 100;
+  optional fewshot.configs.CNNConfig cnn_config = 101;
+  optional fewshot.configs.ProtonetConfig protonet_config = 1000;
+  optional fewshot.configs.TransferConfig transfer_config = 1001;
+  optional fewshot.configs.OptimizerConfig optimizer_config = 2000;
+  optional fewshot.configs.TrainConfig train_config = 3000;
+}

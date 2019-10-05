@@ -1,0 +1,79 @@
+backbone_class: "resnet_backbone"
+model_class: "attractor"
+resnet_config: {
+    height: 84
+    width: 84
+    num_channel: 3
+    num_residual_units: 2
+    num_residual_units: 2
+    num_residual_units: 2
+    num_residual_units: 2
+    num_filters: 64
+    num_filters: 64
+    num_filters: 128
+    num_filters: 256
+    num_filters: 512
+    strides: 1 
+    strides: 2
+    strides: 2
+    strides: 2
+    init_stride: 1
+    init_max_pool: true
+    init_filter: 5
+    use_bottleneck: false
+    wd: 5e-4
+    normalization: "group_norm"
+    num_norm_groups: 32
+    global_avg_pool: true
+    data_format: "NCHW"
+    version: "v1"
+    leaky_relu: 0.0
+    filter_initialization: "normal"
+    add_last_relu: false
+}
+
+protonet_config: {}
+
+transfer_config: {
+    finetune_layers: "none"
+    dummy_lr: 1e0
+    rbp_lambda: 1e-1
+    rbp_nstep: 20
+    finetune_wd: 1e-5
+    old_and_new: true
+    transfer_loss_type: "static_attr"
+    transfer_loss_ratio: 1.0
+    meta_only: true
+    train_wclass_a: false
+    replace_grad_wclass_a: true
+    cost_a_ratio: 0.0
+    cost_b_ratio: 1.0
+    final_cost_a_ratio: 0.0
+    reduce_slow_layers: 1.0
+    cache_transfer_loss_var: false
+    init_gamma: 1e-2
+    learn_gamma: true
+    ft_optimizer_config: {
+        optimizer: "lbfgs"
+        lr_decay_steps: 40
+        max_train_steps: 80
+        lr_list: 1e-3
+        lr_list: 1e-4
+        batch_size: -1
+    }
+}
+
+optimizer_config: {
+    optimizer: "adam"
+    lr_decay_steps: 4000
+    max_train_steps: 8000
+    lr_list: 1e-3
+    lr_list: 1e-4
+    batch_size: 256
+}
+
+train_config: {
+    steps_per_val: 1000
+    steps_per_log: 10
+    steps_per_save: 1000
+}

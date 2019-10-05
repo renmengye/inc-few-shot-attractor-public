@@ -1,0 +1,70 @@
+backbone_class: "resnet_backbone"
+model_class: "multitask"
+resnet_config: {
+    height: 84
+    width: 84
+    num_channel: 3
+    num_residual_units: 1
+    num_residual_units: 1
+    num_residual_units: 1
+    num_residual_units: 1
+    num_filters: 64
+    num_filters: 64
+    num_filters: 96
+    num_filters: 128
+    num_filters: 256
+    strides: 2
+    strides: 2
+    strides: 2
+    strides: 2
+    init_stride: 1
+    init_max_pool: false
+    init_filter: 5
+    use_bottleneck: false
+    wd: 5e-4
+    normalization: "batch_norm"
+    global_avg_pool: true
+    data_format: "NCHW"
+    version: "snailv2"
+    leaky_relu: 0.1
+    filter_initialization: "normal"
+    add_last_relu: false
+}
+
+protonet_config: {
+    similarity: "cosine"
+    cosine_a: true
+    cosine_tau: true
+    cosine_softmax: true
+    cosine_softmax_tau: true
+    cosine_attention: true
+    protos_phi: true
+    reinit_tau: true
+}
+
+transfer_config: {
+    old_and_new: true
+    meta_only: true
+    cost_a_ratio: 0.0
+    cost_b_ratio: 1.0
+    train_wclass_a: true
+    final_cost_a_ratio: 0.0
+}
+
+optimizer_config: {
+    optimizer: "adam"
+    lr_decay_steps: 6000
+    lr_decay_steps: 8000
+    max_train_steps: 10000
+    lr_list: 1e-3
+    lr_list: 1e-4
+    lr_list: 1e-5
+    batch_size: 75
+}
+
+train_config: {
+    steps_per_val: 1000
+    steps_per_log: 10
+    steps_per_save: 1000
+}
+

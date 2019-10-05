@@ -1,0 +1,141 @@
+// Transfer learning configurations.
+
+syntax = "proto2";
+
+package fewshot.configs;
+
+import "fewshot/configs/optimizer_config.proto";
+
+message TransferConfig {
+  // Layers to finetune.
+  optional string finetune_layers = 1;
+
+  // Whether to reduce learning rate for lower layers.
+  optional bool reduce_ft_lr = 2;
+
+  // Dummy learning rate to build one-step computation graph.
+  optional float dummy_lr = 3;
+
+  // Damping rate.
+  optional float rbp_lambda = 4;
+
+  // Number of steps of RBP loops.
+  optional int32 rbp_nstep = 5;
+
+  // RBP batch size.
+  optional int32 rbp_batch_size = 6 [default = -1];
+
+  // Finetune weight decay.
+  optional float finetune_wd = 7;
+
+  // Whether the query set contains both old and new instances.
+  optional bool old_and_new = 8;
+
+  // Type of the additional transfer learning loss.
+  optional string transfer_loss_type = 9 [default = "none"];
+
+  // Ratio of the transfer loss.
+  optional float transfer_loss_ratio = 10;
+
+  // Whether to learn meta-weights only.
+  optional bool meta_only = 11;
+
+  // Whether to finetune readout weights for task A.
+  optional bool train_wclass_a = 12;
+
+  // Replace the gradients for weights for task A to 1-step.
+  optional bool replace_grad_wclass_a = 13;
+
+  // Fractional learning rate for slow layers
+  optional float reduce_slow_layers = 14 [default = 1.0];
+
+  // Initialize weights with prototypes.
+  optional bool proto_init = 15;
+
+  // Cache the transfer loss values.
+  optional bool cache_transfer_loss_var = 16;
+
+  // Scipy optimizer interface.
+  optional string scipy_interface = 17 [default = 'built-in'];
+
+  // Layers for meta-learning altogether.
+  optional string meta_layers = 18 [default = "all"];
+
+  // Learned memory size.
+  optional int32 learned_memory_size = 19;
+
+  // Meta weights weight decay.
+  optional float wd = 20;
+
+  // Whether to warm start with no learned regularizer.
+  optional bool warm_start = 21;
+
+  // Initial value for the cosine similarity scale variable.
+  optional float attn_attr_tau_init = 22 [default = 2.0];
+
+  // Initial variance of the MLP.
+  optional float mlp_init = 23 [default = 0.01];
+
+  // Fast model type, LR or MLP.
+  optional string fast_model = 24 [default = 'lr'];
+
+  // Fast model MLP hidden size.
+  optional int32 fast_mlp_hidden = 25 [default = 10];
+
+  // Initial log gamma.
+  optional float init_gamma = 26 [default = 1e-3];
+
+  // Whether to learn gamma.
+  optional bool learn_gamma = 27 [default = true];
+
+  // Number of BPTT steps.
+  optional int32 bptt_steps = 28 [default = 1];
+
+  // Whether to add BPTT in the transient phase.
+  optional bool transient_bptt = 29;
+
+  // Whether to add RBP in the steady phase.
+  optional bool steady_rbp = 30 [default = true];
+
+  // Whether to do BPTT at all steps.
+  optional bool bptt_all = 31;
+
+  // Loss multiplier for bptt.
+  optional float bptt_ratio = 32 [default = 1.0];
+
+  // Disable RBP to backprop into embeddings.
+  optional bool disable_rbp_embedding = 103;
+
+  // MLP hidden size for the transfer loss function.
+  optional int32 mlp_hidden = 100 [default = 50];
+
+  // MLP activation function.
+  optional string mlp_act = 101;
+
+  // MLP number layers for the transfer loss function.
+  optional int32 mlp_layers = 102;
+
+  // Cost multiplier for task A.
+  optional float cost_a_ratio = 1000;
+
+  // Cost multiplier for task B.
+  optional float cost_b_ratio = 1001;
+
+  // Cost to remember task A (not used).
+  optional float cost_remember = 1002;
+
+  // Number of steps when the cool down of task A starts.
+  optional int32 offset_a = 2000;
+
+  // Final task A ratio.
+  optional float final_cost_a_ratio = 2001;
+
+  // Number of steps to warm up B from 0.0.
+  optional int32 warmup_b = 2002;
+
+  // Number of steps to cool down A.
+  optional int32 cooldown_a = 2003;
+
+  // Finetune optimizer config.
+  optional fewshot.configs.OptimizerConfig ft_optimizer_config = 3000;
+}

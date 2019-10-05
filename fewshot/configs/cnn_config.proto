@@ -1,0 +1,16 @@
+// General CNN configurations.
+
+syntax = "proto2";
+
+package fewshot.configs;
+
+message CNNConfig {
+  optional int32 height = 1;
+  optional int32 width = 2;
+  optional int32 num_channel = 3;
+  repeated int32 num_filters = 4;
+  repeated int32 strides = 5;
+  repeated string pool_fn = 6;
+  repeated int32 pool_strides = 7;
+  repeated string conv_act_fn = 8;
+}

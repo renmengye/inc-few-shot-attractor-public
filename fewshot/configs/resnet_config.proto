@@ -1,0 +1,64 @@
+// General ResNet configurations.
+
+syntax = "proto2";
+
+package fewshot.configs;
+
+message ResnetConfig {
+  // Input image height.
+  optional int32 height = 1;
+
+  // Input image width.
+  optional int32 width = 2;
+  
+  // Input image number of channels.
+  optional int32 num_channel = 3;
+
+  // Number of residual units.
+  repeated int32 num_residual_units = 4;
+
+  // Input image number of filters.
+  repeated int32 num_filters = 5;
+
+  // Stride for the initial convolution of each resolution stage.
+  repeated int32 strides = 6;
+
+  // Initial convolution strides.
+  optional int32 init_stride = 7;
+
+  // Whether doing max pooling in the initial convolution.
+  optional bool init_max_pool = 8;
+
+  // Number of filters in the initial convolution.
+  optional int32 init_filter = 9;
+
+  // Whether to use bottleneck layer in each residual unit.
+  optional bool use_bottleneck = 10;
+
+  // Weight decay.
+  optional float wd = 11;
+
+  // Normalization scheme used in every layer.
+  optional string normalization = 12 [default = "batch_norm"];
+
+  // Number of groups (used by GroupNorm).
+  optional int32 num_norm_groups = 13;
+
+  // Whether perform global average pooling in the end.
+  optional bool global_avg_pool = 14;
+  
+  // Data format, NCHW or NHWC.
+  optional string data_format = 15 [default = "NCHW"];
+  
+  // ResNet version, v1, v2, snailv1, or snailv2.
+  optional string version = 16 [default = "v1"];
+
+  // Whether to use Leaky ReLU, if yes, by how much.
+  optional float leaky_relu = 17 [default = 0.0];
+  
+  // Filter initialization scheme, normal or uniform.
+  optional string filter_initialization = 18 [default = "normal"];
+
+  // Add the final ReLU to the feature map.
+  optional bool add_last_relu = 19 [default =  true];
+}

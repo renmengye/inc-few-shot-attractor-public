@@ -1,0 +1,7 @@
+pillow
+pandas
+tqdm
+scipy
+scikit-learn
+opencv-python
+tensorflow=1.11

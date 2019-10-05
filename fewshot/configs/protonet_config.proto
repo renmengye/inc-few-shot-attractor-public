@@ -1,0 +1,31 @@
+// ProtoNet-like model configurations.
+
+syntax = "proto2";
+
+package fewshot.configs;
+
+message ProtonetConfig {
+  // Similarity function, euclidean or cosine.
+  optional string similarity = 1 [default = "euclidean"];
+  
+  // Whether to use cosine softmax in task A.
+  optional bool cosine_a = 2;
+
+  // Whether to add a learnable scaling factor in task A.
+  optional bool cosine_tau = 3;
+
+  // Whether to use cosine softmax in task B.
+  optional bool cosine_softmax = 4;
+
+  // Whether to add a learnable scaling factor in task B
+  optional bool cosine_softmax_tau = 5;
+
+  // Whether to use cosine attention mechanism.
+  optional bool cosine_attention = 6;
+
+  // Whether to gate the prototypes with learned parameters.
+  optional bool protos_phi = 7;
+
+  // Whether to reinit tau variable for cosine A.
+  optional bool reinit_tau = 8;
+}

@@ -1,0 +1,19 @@
+// Training loop configurations.
+
+syntax = "proto2";
+
+package fewshot.configs;
+
+message TrainConfig {
+  // Number of steps for one validation run.
+  optional int32 steps_per_val = 1;
+
+  // Number of steps per output printing.
+  optional int32 steps_per_log = 2;
+
+  // Number of steps per mode checkpointing.
+  optional int32 steps_per_save = 3;
+  
+  // Number of steps to pretrain task A.
+  optional int32 pretrain_a_steps = 4;
+}

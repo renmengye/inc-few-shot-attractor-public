@@ -1,0 +1,25 @@
+// Learning configurations.
+
+syntax = "proto2";
+
+package fewshot.configs;
+
+message OptimizerConfig {
+  // Optimizer name.
+  optional string optimizer = 1;
+
+  // Learning rate decay values.
+  repeated float lr_list = 2;
+
+  // Learning rate decay steps.
+  repeated int32 lr_decay_steps = 3;
+
+  // Total number of training steps.
+  optional int32 max_train_steps = 4;
+
+  // Training batch size.
+  optional int32 batch_size = 5;
+
+  // Training number of GPUs.
+  optional int32 num_gpu = 6 [default = 1];
+}
