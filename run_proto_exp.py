@@ -174,6 +174,10 @@ def evaluate_b(sess,
     results_dict['acc_new2'] = acc_list_new2.mean()
     results_dict['acc_new2_se'] = acc_list_new2.std() / np.sqrt(
         float(acc_list_new2.size))
+    results_dict['delta_a'] = results_dict['acc_old'] - results_dict['acc_old2']
+    results_dict['delta_b'] = results_dict['acc_new'] - results_dict['acc_new2']
+    results_dict['delta'] = 0.5 * (
+        results_dict['delta_a'] + results_dict['delta_b'])
   return results_dict
 
 
@@ -187,7 +191,7 @@ def main():
   nclasses_test = FLAGS.nclasses_b
   num_test = FLAGS.ntest
   is_eval = FLAGS.eval
-  nepisode = FLAGS.nepisode
+  nepisode_final = FLAGS.nepisode_final
   run_test = FLAGS.test
   pretrain = FLAGS.pretrain
   retest = FLAGS.retest
@@ -263,7 +267,7 @@ def main():
   # Calculate prototypes A.
   if old_and_new:
     prototypes_a = calculate_protos(sess, model, model.num_classes_a,
-                                    data['a_train'], nepisode)
+                                    data['a_train'], nepisode_final)
   else:
     prototypes_a = None
 
@@ -274,7 +278,7 @@ def main():
       sess,
       model,
       data['b_val'],
-      nepisode,
+      nepisode_final,
       model.num_classes_a,
       nclasses_val,
       prototypes_a=prototypes_a,
@@ -288,7 +292,7 @@ def main():
         sess,
         model,
         data['b_test'],
-        nepisode,
+        nepisode_final,
         model.num_classes_a,
         nclasses_val,
         prototypes_a=prototypes_a,

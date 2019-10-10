@@ -98,8 +98,8 @@ def get_saver(log_folder):
 
     def save(self, sess, tag):
       saver.save(
-          self.get_session(sess),
-          os.path.join(log_folder, 'ckpt-{}'.format(tag)))
+          self.get_session(sess), os.path.join(log_folder,
+                                               'ckpt-{}'.format(tag)))
 
   return Saver()
 
@@ -212,8 +212,7 @@ def evaluate_b(sess, model, task_it, num_steps, old_and_new):
       acc_list_old[tt] = top1(prediction_b[old_idx], labels_b[old_idx])
       acc_list_old2[tt] = top1(prediction_b_old[old_idx], labels_b[old_idx])
       acc_list_new[tt] = top1(prediction_b[new_idx], labels_b[new_idx])
-      acc_list_new2[tt] = top1(prediction_b_new[new_idx],
-                               labels_b_new[new_idx])
+      acc_list_new2[tt] = top1(prediction_b_new[new_idx], labels_b_new[new_idx])
       acc_top5_list_old[tt] = topk(prediction_b[old_idx], labels_b[old_idx], 5)
       acc_top5_list_old2[tt] = topk(prediction_b_old[old_idx],
                                     labels_b[old_idx], 5)
@@ -262,6 +261,10 @@ def evaluate_b(sess, model, task_it, num_steps, old_and_new):
     results_dict['acc_top5_new_se'] = stderr(acc_top5_list_new)
     results_dict['acc_top5_new2'] = acc_top5_list_new2.mean()
     results_dict['acc_top5_new2_se'] = stderr(acc_top5_list_new2)
+    results_dict['delta_a'] = results_dict['acc_old'] - results_dict['acc_old2']
+    results_dict['delta_b'] = results_dict['acc_new'] - results_dict['acc_new2']
+    results_dict['delta'] = 0.5 * (
+        results_dict['delta_a'] + results_dict['delta_b'])
   return results_dict
 
 
@@ -678,8 +681,8 @@ def get_datasets(dataset, metadata, nshot, num_test, batch_size, num_gpu,
       num_classes_a = nclasses_a
     task_b_iter = preprocess_old_and_new(num_classes_a, task_a_iter_old,
                                          task_b_iter)
-    task_b_val_iter = preprocess_old_and_new(
-        num_classes_a, task_a_val_iter_old, task_b_val_iter)
+    task_b_val_iter = preprocess_old_and_new(num_classes_a, task_a_val_iter_old,
+                                             task_b_val_iter)
     task_b_test_iter = preprocess_old_and_new(
         num_classes_a, task_a_test_iter_old, task_b_test_iter)
 
@@ -779,18 +782,17 @@ def final_log(log_folder, results, filename='results.tsv', old_and_new=False):
       if 'acc' in _results:
         _log_line(f,
                   formatname(n) + ' Acc', _results['acc'], _results['acc_se'])
-      if 'acc_top5' in _results:
-        _log_line(f,
-                  formatname(n) + ' Top5 Acc', _results['acc_top5'],
-                  _results['acc_top5_se'])
       for m in [
-          'acc_new', 'acc_new2', 'acc_old', 'acc_old2', 'acc_top5_new',
-          'acc_top5_new2', 'acc_top5_old', 'acc_top5_old2'
+          'acc_new', 'acc_new2', 'acc_old', 'acc_old2', 'delta_a', 'delta_b',
+          'delta'
       ]:
         if m in _results:
-          _log_line(f,
-                    formatname(n) + ' ' + formatname(m), _results[m],
-                    _results[m + '_se'])
+          if (m + '_se') in results:
+            _log_line(f,
+                      formatname(n) + ' ' + formatname(m), _results[m],
+                      _results[m + '_se'])
+          else:
+            _log_line(f, formatname(n) + ' ' + formatname(m), _results[m], 0.0)
 
   f.close()
 
@@ -912,8 +914,8 @@ def main():
     results['val_b'] = evaluate_b(sess, modelv, data['b_val'], nepisode_final,
                                   old_and_new)
   if run_test:
-    results['test_b'] = evaluate_b(sess, modelt, data['b_test'],
-                                   nepisode_final, old_and_new)
+    results['test_b'] = evaluate_b(sess, modelt, data['b_test'], nepisode_final,
+                                   old_and_new)
   final_log(log_folder, results, old_and_new=old_and_new)
 
 
