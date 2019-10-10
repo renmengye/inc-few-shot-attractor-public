@@ -1,7 +1,7 @@
 # inc-few-shot-attractor-public
 
 This repository contains code for the following paper:
-**Incremental Few-Shot Learning with Attention Attractor Networks**. Mengye Ren, Renjie Liao, Ethan Fetaya, Richard S. Zemel. NeurIPS 2019. [[arxiv](https://arxiv.org/abs/1803.00676)]
+**Incremental Few-Shot Learning with Attention Attractor Networks**. Mengye Ren, Renjie Liao, Ethan Fetaya, Richard S. Zemel. NeurIPS 2019. [[arxiv](https://arxiv.org/abs/1810.07218)]
 
 ## Dependencies
 * cv2
