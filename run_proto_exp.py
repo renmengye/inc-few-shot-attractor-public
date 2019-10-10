@@ -2,7 +2,7 @@
 
 Author: Mengye Ren (mren@cs.toronto.edu)
 
-See run_multitask_exp.py for usage.
+See run_exp.py for usage.
 """
 
 from __future__ import (absolute_import, division, print_function,
@@ -16,9 +16,9 @@ import tensorflow as tf
 from tqdm import tqdm
 
 from fewshot.utils import logger
-from run_multitask_exp import (get_config, get_restore_saver, get_datasets,
-                               get_model, save_config, get_exp_logger,
-                               get_saver, restore_model, final_log)
+from run_exp import (get_config, get_restore_saver, get_datasets, get_model,
+                     save_config, get_exp_logger, get_saver, restore_model,
+                     final_log)
 from train_lib import get_metadata
 
 log = logger.get()
@@ -182,16 +182,14 @@ def main():
   # Flags
   nshot = FLAGS.nshot
   dataset = FLAGS.dataset
-  nclasses_train = FLAGS.nclasses_train
-  nclasses_val = FLAGS.nclasses_val
-  nclasses_test = FLAGS.nclasses_test
+  nclasses_train = FLAGS.nclasses_b
+  nclasses_val = FLAGS.nclasses_b
+  nclasses_test = FLAGS.nclasses_b
   num_test = FLAGS.ntest
   is_eval = FLAGS.eval
   nepisode = FLAGS.nepisode
   run_test = FLAGS.test
-  load_pytorch_weights = FLAGS.load_pytorch_weights
   pretrain = FLAGS.pretrain
-  restore_rbp = FLAGS.restore_rbp
   retest = FLAGS.retest
   tag = FLAGS.tag
 
@@ -223,8 +221,7 @@ def main():
         nclasses_train,
         nclasses_val,
         nclasses_test,
-        is_eval=is_eval,
-        load_pytorch_weights=load_pytorch_weights)
+        is_eval=is_eval)
     model = model_dict['val']
     modelv = model_dict['val']
 
@@ -235,8 +232,8 @@ def main():
   with log.verbose_level(2):
     data = get_datasets(dataset, metadata, nshot, num_test,
                         opt_config.batch_size, opt_config.num_gpu,
-                        metadata['num_classes_a'], nclasses_train,
-                        nclasses_val, nclasses_test, old_and_new, seed, True)
+                        metadata['num_classes_a'], nclasses_train, nclasses_val,
+                        nclasses_test, old_and_new, seed, True)
 
   # ------------------------------------------------------------------------
   # Save configurations
@@ -246,7 +243,6 @@ def main():
   # Log outputs
   restore_saver = get_restore_saver(
       retest=retest,
-      restore_rbp=restore_rbp,
       cosine_a=modelv.config.protonet_config.cosine_a,
       reinit_tau=modelv.config.protonet_config.reinit_tau)
   logger = get_exp_logger(log_folder)

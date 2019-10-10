@@ -730,10 +730,8 @@ def restore_model(sess,
   """Restore model from checkpoint."""
   if pretrain is not None:
     log_folder_restore = pretrain
-    print('restore from', pretrain)
     log.info('Restore from {}'.format(log_folder_restore))
     ckpt = tf.train.latest_checkpoint(log_folder_restore)
-    print('checkpoint', ckpt)
     log.info('Checkpoint: {}'.format(ckpt))
     if is_eval:
       modelv.initialize(sess)
