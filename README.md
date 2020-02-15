@@ -22,14 +22,14 @@ export DATA_ROOT={DATA_ROOT}
 Then, set up the datasets following the instructions in the subsections.
 
 ### miniImageNet
-[[Google Drive](https://drive.google.com/open?id=16V_ZlkW4SsnNDtnGmaBRq2OoPmUOc5mY)]  (1.1 GB)
+[[Google Drive](https://drive.google.com/open?id=13DV4S4hyc1zLomr8Ej3YwQMyAlkNui-8)]  (5.5 GB)
 ```
 # Download and place "mini-imagenet.tar.gz" in "$DATA_ROOT/mini-imagenet".
 mkdir -p $DATA_ROOT/mini-imagenet
 cd $DATA_ROOT/mini-imagenet
-mv ~/Downloads/mini-imagenet.tar.gz .
-tar -xzvf mini-imagenet.tar.gz
-rm -f mini-imagenet.tar.gz
+mv ~/Downloads/mini-imagenet.tar .
+tar -xvf mini-imagenet.tar
+rm -f mini-imagenet.tar
 ```
 
 ### tieredImageNet
