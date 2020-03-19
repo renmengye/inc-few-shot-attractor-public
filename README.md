@@ -33,7 +33,7 @@ rm -f mini-imagenet.tar
 ```
 
 ### tieredImageNet
-[[Google Drive](https://drive.google.com/open?id=1hqVbS2nhHXa51R9_aB6QDXeC0P2LQG_u)]  (12.9 GB)
+[[Google Drive](https://drive.google.com/open?id=1nZ787R8-WqF_dJner-LoaSB3iyiZPi6z)]  (12.9 GB)
 ```
 # Download and place "tiered-imagenet.tar" in "$DATA_ROOT/tiered-imagenet".
 mkdir -p $DATA_ROOT/tiered-imagenet
